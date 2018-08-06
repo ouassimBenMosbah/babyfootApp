@@ -1,11 +1,24 @@
+# Compiled files
+dist/
+
+# Config file
+config/config.js
+
+# Node stuff
+node_modules
+.npm
+.node_repl_history
+.lock-wscript
+logs
+*.log
+npm-debug.log*
+
+# OS stuff
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+$RECYCLE.BIN/
+._*
 .DS_Store
-node_modules/
-npm-debug.log
-.idea/
-dump.rdb
-.vscode/
-public/*
-dist
-coverage/
-.nyc_output/
-yarn.lock
+.Spotlight-V100
+.Trashes
