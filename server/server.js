@@ -1,43 +1,34 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
-const session = require('express-session')
-const dbConnection = require('./database') 
-const MongoStore = require('connect-mongo')(session)
-const passport = require('./passport');
-const app = express()
-const PORT = 8080
-// Route requires
-const user = require('./routes/user')
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import dbConnection from './database';
+import passport from './passport';
+import user from './routes/user';
 
-// MIDDLEWARE
-app.use(morgan('dev'))
+const app = express();
+
+app.use(morgan('dev'));
 app.use(
-	bodyParser.urlencoded({
-		extended: false
-	})
-)
-app.use(bodyParser.json())
+  bodyParser.urlencoded({
+    extended: false,
+  }),
+);
+app.use(bodyParser.json());
 
-// Sessions
 app.use(
-	session({
-		secret: 'fraggle-rock', //pick a random string to make the hash that is generated secure
-		store: new MongoStore({ mongooseConnection: dbConnection }),
-		resave: false, //required
-		saveUninitialized: false //required
-	})
-)
+  session({
+    secret: 'fraggle-rock',
+    store: new MongoStore({ mongooseConnection: dbConnection }),
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
-// Passport
-app.use(passport.initialize())
-app.use(passport.session()) // calls the deserializeUser
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use('/user', user);
 
-// Routes
-app.use('/user', user)
-
-// Starting Server 
-app.listen(PORT, () => {
-	console.log(`App listening on PORT: ${PORT}`)
-})
+export default app;
