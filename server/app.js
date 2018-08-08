@@ -6,6 +6,8 @@ import connectMongo from 'connect-mongo';
 import dbConnection from './database';
 import passport from './passport';
 import user from './routes/user';
+import team from './routes/team';
+import match from './routes/match';
 
 const app = express();
 const MongoStore = connectMongo(session);
@@ -32,5 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/user', user);
+app.use('/team', team);
+app.use('/match', match);
 
 export default app;
