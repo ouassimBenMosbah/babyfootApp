@@ -6,9 +6,27 @@ mongoose.promise = Promise;
 
 // Define userSchema
 const userSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+  },
 
-  username: { type: String, unique: true, required: true },
-  password: { type: String, unique: false, required: true },
+  username: {
+    type: String,
+    unique: true,
+    trim: true,
+    required: true,
+  },
+
+  password: {
+    type: String,
+    unique: false,
+    trim: true,
+    required: true,
+  },
 
 });
 
