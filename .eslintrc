@@ -2,5 +2,13 @@
   "extends": "airbnb",
   "rules": {
     "no-console": "off"
+
+  },
+  "plugins": [
+    "jest"
+  ],
+  "env": {
+    "node": true,
+    "jest/globals": true
   }
 }
