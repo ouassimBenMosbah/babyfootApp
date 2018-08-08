@@ -33,13 +33,13 @@ router.post('/', (req, res) => {
 router.post(
   '/login',
   (req, res, next) => {
-    // console.log('routes/user.js, login, req.body: ');
-    // console.log(req.body);
+    console.log('routes/user.js, login, req.body: ');
+    console.log(req.body);
     next();
   },
   passport.authenticate('local'),
   (req, res) => {
-    // console.log('logged in', req.user);
+    console.log('logged in', req.user);
     const userInfo = {
       username: req.user.username,
     };
@@ -48,8 +48,8 @@ router.post(
 );
 
 router.get('/', (req, res) => {
-  // console.log('===== user!!======');
-  // console.log(req.user);
+  console.log('===== user!!======');
+  console.log(req.user);
   if (req.user) {
     res.json({ user: req.user });
   } else {
