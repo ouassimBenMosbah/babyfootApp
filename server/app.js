@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 import dbConnection from './database';
 import passport from './passport';
 import user from './routes/user';
@@ -11,7 +13,6 @@ import match from './routes/match';
 
 const app = express();
 const MongoStore = connectMongo(session);
-
 
 app.use(morgan('dev'));
 app.use(
@@ -32,6 +33,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/user', user);
 app.use('/team', team);
