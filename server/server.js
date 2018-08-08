@@ -2,12 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import connectMongo from 'connect-mongo';
 import dbConnection from './database';
 import passport from './passport';
 import user from './routes/user';
 
 const app = express();
+const MongoStore = connectMongo(session);
+
 
 app.use(morgan('dev'));
 app.use(
@@ -31,4 +33,4 @@ app.use(passport.session());
 
 app.use('/user', user);
 
-export default app;
+app.listen(8080);
