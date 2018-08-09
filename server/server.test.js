@@ -1,4 +1,5 @@
 import supertest from 'supertest';
+import mongoose from 'mongoose';
 import app from './app';
 
 describe('Testing the server connection', () => {
@@ -6,7 +7,11 @@ describe('Testing the server connection', () => {
     app.listen(8080);
   });
 
-  afterAll(() => app.close());
+  afterAll(async () => {
+    await app.close();
+    await mongoose.connection.close();
+    await mongoose.disconnect();
+  });
 
   test('server is listening on port 8080', async () => {
     const response = await supertest(app).get('/');
