@@ -36,8 +36,10 @@ app.use(passport.session());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/user', user);
-app.use('/team', team);
-app.use('/match', match);
+app.use('/', auth);
+
+app.use('/users', user);
+app.use('/teams', team);
+app.use('/matchs', match);
 
 export default app;
