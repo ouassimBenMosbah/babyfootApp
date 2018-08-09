@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "nodemon server/server.js --exec babel-node --presets es2015",
-    "test": "jest server",
+    "test": "jest --detectOpenHandles server",
     "coverage": "jest --collectCoverageFrom=server/**.js --coverage server"
   },
   "devDependencies": {
