@@ -13,8 +13,16 @@ describe('Testing the server connection', () => {
     await mongoose.disconnect();
   });
 
-  test('server is listening on port 8080', async () => {
+  test('server should respond 200 when getting /', async () => {
     const response = await supertest(app).get('/');
-    expect(response).toBe(200);
+    expect(response.status).toBe(200);
+  });
+
+  test('server should respond 200 with a body containing a username and a password', async () => {
+    const response = await supertest(app).post('/')
+      .type('form')
+      .send({ username: 'salut', password: 'test' });
+    expect(response.body).toBe({ username: 'salut', password: 'test' });
+    expect(response.status).toBe(302);
   });
 });
