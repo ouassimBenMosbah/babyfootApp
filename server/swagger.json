@@ -15,24 +15,24 @@
     {
       "name": "Users",
       "description": "API for users in the system"
+    },
+    {
+      "name": "Teams",
+      "description": "API for teams in the system"
+    },
+    {
+      "name": "Matchs",
+      "description": "API for matchs in the system"
     }
   ],
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/users": {
       "post": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Create new user in system",
+        "tags": ["Users"],
+        "summary": "Create a new user in system",
         "parameters": [
           {
             "name": "user",
@@ -43,9 +43,7 @@
             }
           }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "New user is created",
@@ -56,9 +54,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get all users in system",
         "responses": {
           "200": {
@@ -76,14 +72,12 @@
           "name": "userId",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "ID of the user that we want to find",
           "type": "string"
         }
       ],
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get user with given ID",
         "responses": {
           "200": {
@@ -96,9 +90,7 @@
       },
       "delete": {
         "summary": "Delete user with given ID",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "User is deleted",
@@ -110,9 +102,195 @@
       },
       "put": {
         "summary": "Update user with given ID",
-        "tags": [
-          "Users"
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
         ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Create a new team in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get all teams in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}": {
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the team that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get team with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete team with given ID",
+        "tags": ["Teams"],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update team with given ID",
+        "tags": ["Teams"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/matchs": {
+      "post": {
+        "tags": ["Matchs"],
+        "summary": "Create a new match in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Matchs"],
+        "summary": "Get all matchs in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/matchs/{matchId}": {
+      "parameters": [
+        {
+          "name": "matchId",
+          "in": "path",
+          "required": true,
+          "description": "ID of the match that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Matchs"],
+        "summary": "Get match with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete match with given ID",
+        "tags": ["Matchs"],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update match with given ID",
+        "tags": ["Matchs"],
         "parameters": [
           {
             "name": "user",
@@ -136,14 +314,15 @@
   },
   "definitions": {
     "User": {
-      "required": [
-        "email",
-        "username",
-        "password"
-      ],
+      "required": ["email", "username", "password"],
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
         "email": {
           "type": "string",
+          "format": "email",
           "uniqueItems": true
         },
         "username": {
@@ -157,23 +336,79 @@
     },
     "Users": {
       "type": "array",
-      "$ref": "#/definitions/User"
+      "items": {
+        "$ref": "#/definitions/User"
+      }
     },
     "Team": {
-      "required": [
-        "users"
-      ],
+      "required": ["users"],
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
         "users": {
           "type": "array",
-          "$ref": "#/definitions/Users",
-          "uniqueItems": true
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Users"
+          }
         }
       }
     },
     "Teams": {
       "type": "array",
-      "$ref": "#/definitions/Team"
+      "items": {
+        "$ref": "#/definitions/Team"
+      }
+    },
+    "Match": {
+      "required": ["teams"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "teams": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/definitions/Teams"
+          }
+        },
+        "score": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "properties": {
+              "idTeam": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "goals": {
+                "type": "integer",
+                "maximum": 10,
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Matchs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Match"
+      }
     }
   }
 }
