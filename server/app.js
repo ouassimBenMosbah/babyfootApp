@@ -8,6 +8,8 @@ import cors from 'cors';
 import swaggerDocument from './swagger.json';
 import dbConnection from './database';
 import passport from './passport';
+
+import auth from './routes/auth';
 import user from './routes/user';
 import team from './routes/team';
 import match from './routes/match';
@@ -17,11 +19,6 @@ const MongoStore = connectMongo(session);
 
 app.use(cors());
 app.use(morgan('dev'));
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  }),
-);
 app.use(bodyParser.json());
 
 app.use(
@@ -40,6 +37,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const API_ROUTE = '/api/v1';
 
+app.use(`${API_ROUTE}/`, auth);
 app.use(`${API_ROUTE}/users`, user);
 app.use(`${API_ROUTE}/teams`, team);
 app.use(`${API_ROUTE}/matchs`, match);
