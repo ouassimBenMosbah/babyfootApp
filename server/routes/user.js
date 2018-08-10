@@ -1,34 +1,7 @@
 import express from 'express';
 
 const router = express.Router();
-const User = require('../database/models/user');
 const passport = require('../passport');
-
-router.post('/', (req, res) => {
-  // console.log('user signup');
-
-  const { username, password } = req.body;
-  // ADD VALIDATION
-  User.findOne({ username }, (err, user) => {
-    if (err) {
-      // console.log('User.js post error: ', err);
-    } else if (user) {
-      res.json({
-        error: `Sorry, already a user with the username: ${username}`,
-      });
-    } else {
-      const newUser = new User({
-        username,
-        password,
-      });
-      newUser.save((newErr, savedUser) => {
-        if (newErr) return res.json(newErr);
-        res.json(savedUser);
-        return false;
-      });
-    }
-  });
-});
 
 router.post(
   '/login',
@@ -39,7 +12,7 @@ router.post(
   },
   passport.authenticate('local'),
   (req, res) => {
-    console.log('logged in', req.user);
+    console.log('logged in', req.body.username);
     const userInfo = {
       username: req.user.username,
     };
@@ -47,9 +20,10 @@ router.post(
   },
 );
 
-router.get('/', (req, res) => {
-  console.log('===== user!!======');
-  console.log(req.user);
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const { fields } = req.query;
+  console.log({ id, fields });
   if (req.user) {
     res.json({ user: req.user });
   } else {
