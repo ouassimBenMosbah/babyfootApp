@@ -22,7 +22,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.status(200).send();
+  res.status(200).send('API is working');
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
