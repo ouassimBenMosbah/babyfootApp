@@ -7,6 +7,8 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json';
 import dbConnection from './database';
 import passport from './passport';
+
+import auth from './routes/auth';
 import user from './routes/user';
 import team from './routes/team';
 import match from './routes/match';
@@ -15,11 +17,6 @@ const app = express();
 const MongoStore = connectMongo(session);
 
 app.use(morgan('dev'));
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  }),
-);
 app.use(bodyParser.json());
 
 app.use(
