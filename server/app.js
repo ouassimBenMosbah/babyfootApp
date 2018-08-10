@@ -38,8 +38,10 @@ app.use(passport.session());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/user', user);
-app.use('/team', team);
-app.use('/match', match);
+const API_ROUTE = '/api/v1';
+
+app.use(`${API_ROUTE}/users`, user);
+app.use(`${API_ROUTE}/teams`, team);
+app.use(`${API_ROUTE}/matchs`, match);
 
 export default app;
