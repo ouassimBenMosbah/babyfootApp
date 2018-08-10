@@ -1,7 +1,8 @@
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../database/models/user');
+import Strategy from 'passport-local';
 
-const strategy = new LocalStrategy({
+import User from '../database/models/user';
+
+const strategy = new Strategy({
   usernameField: 'username',
 }, ((username, password, done) => {
     User.findOne({ username }, (err, user) => {
