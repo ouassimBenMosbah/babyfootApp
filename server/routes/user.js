@@ -1,4 +1,5 @@
 import express from 'express';
+import User from '../database/models/user';
 
 const router = express.Router();
 const passport = require('../passport');
@@ -20,14 +21,22 @@ router.post(
   },
 );
 
+router.get('/', (req, res) => {
+  User.find({}).then((users) => {
+    res.status(200).send(users);
+  }).catch((err) => {
+    res.status(401).send('An error occured', err);
+  });
+});
+
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   const { fields } = req.query;
   console.log({ id, fields });
   if (req.user) {
-    res.json({ user: req.user });
+    res.json({ users: req.user });
   } else {
-    res.json({ user: null });
+    res.status(404).send('User not found');
   }
 });
 

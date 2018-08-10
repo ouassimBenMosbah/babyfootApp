@@ -25,7 +25,7 @@
       "description": "API for matchs in the system"
     }
   ],
-  "schemes": ["https"],
+  "schemes": ["http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
@@ -45,7 +45,7 @@
         ],
         "produces": ["application/json"],
         "responses": {
-          "200": {
+          "201": {
             "description": "New user is created",
             "schema": {
               "$ref": "#/definitions/User"
