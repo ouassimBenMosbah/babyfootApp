@@ -5,13 +5,13 @@ const User = require('../database/models/user');
 const passport = require('../passport');
 
 router.post('/', (req, res) => {
-  // console.log('user signup');
+  console.log('user signup');
 
   const { username, password } = req.body;
   // ADD VALIDATION
   User.findOne({ username }, (err, user) => {
     if (err) {
-      // console.log('User.js post error: ', err);
+      console.log('User.js post error: ', err);
     } else if (user) {
       res.json({
         error: `Sorry, already a user with the username: ${username}`,
@@ -51,9 +51,11 @@ router.get('/', (req, res) => {
   console.log('===== user!!======');
   console.log(req.user);
   if (req.user) {
-    res.json({ user: req.user });
+    res.json({ users: req.user });
   } else {
-    res.json({ user: null });
+    res.json({
+      users: [],
+    });
   }
 });
 
