@@ -31,11 +31,8 @@ const userSchema = new Schema({
 
 // Define schema methods
 userSchema.methods = {
-  checkPassword(inputPassword) {
-    return bcrypt.compareSync(inputPassword, this.password);
-  },
   hashPassword: plainTextPassword => bcrypt.hashSync(plainTextPassword, 10),
-  isValidPassword: password => bcrypt.compareSync(password, this.password),
+  isValidPassword(password) { return bcrypt.compareSync(password, this.password); },
 };
 
 // Define hooks for pre-saving
