@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import swaggerDocument from './swagger.json';
 import dbConnection from './database';
 import passport from './passport';
@@ -14,6 +15,7 @@ import match from './routes/match';
 const app = express();
 const MongoStore = connectMongo(session);
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(
   bodyParser.urlencoded({
