@@ -27,7 +27,7 @@
     "supertest": "^3.1.0"
   },
   "scripts": {
-    "start": "nodemon server/server.js --exec babel-node --presets es2015",
+    "start": "nodemon src/server.js --exec babel-node --presets es2015",
     "test": "jest --detectOpenHandles server",
     "coverage": "jest --collectCoverageFrom=server/**.js --coverage server"
   },
