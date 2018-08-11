@@ -12,9 +12,12 @@ const userExists = async (email, username) => User.findOne({
 router.post('/signup', async (req, res) => {
   const { username, password, email } = req.body;
   const userAlreadyExists = await userExists(email, username);
-  console.log(userAlreadyExists);
+
   if (userAlreadyExists.email === email) {
     return res.status(409).send('email already exists');
+  }
+  if (userAlreadyExists.username === username) {
+    return res.status(409).send('username already exists');
   }
 
   const newUser = new User({ username, password, email });
