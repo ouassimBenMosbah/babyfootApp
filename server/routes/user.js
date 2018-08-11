@@ -29,12 +29,27 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+const arrayToObject = (array) => {
+  const fields = array.forEach((field) => {
+    fields[field] = 1;
+    return fields;
+  }, {});
+  return fields;
+};
+
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const { fields } = req.query;
-  console.log({ id, fields });
-  if (req.user) {
-    res.json({ users: req.user });
+  let dict = {};
+
+  if (fields) {
+    dict = arrayToObject(fields.split(','));
+  }
+
+  const user = await User.findById(id).select(dict);
+
+  if (user) {
+    res.send(user);
   } else {
     res.status(404).send('User not found');
   }
