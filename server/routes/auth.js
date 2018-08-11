@@ -5,18 +5,23 @@ import User from '../database/models/user';
 
 const router = express.Router({});
 
-const isUsernameUsed = async username => await User.findOne({ username }) !== null;
+const userExists = async (email, username) => User.findOne({
+  $or: [{ email }, { username }],
+});
 
 router.post('/signup', async (req, res) => {
   const { username, password, email } = req.body;
-  const usernameExists = await isUsernameUsed(username);
-  if (usernameExists) {
-    return res.status(409).send('User with provided username already exists');
+  const userAlreadyExists = await userExists(email, username);
+  console.log(userAlreadyExists);
+  if (userAlreadyExists.email === email) {
+    return res.status(409).send('email already exists');
   }
 
   const newUser = new User({ username, password, email });
   return newUser.save((newErr, savedUser) => {
-    if (newErr) { return res.status(422).json(newErr); }
+    if (newErr) {
+      return res.status(422).json(newErr);
+    }
     return res.status(201).json(savedUser);
   });
 });
