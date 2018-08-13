@@ -14,26 +14,41 @@ const arrayToObject = (array) => {
 };
 
 router.get('/', async (req, res) => {
-  const { range } = req.query;
-  const [rangeStart, rangeEnd] = range ? range.split('-') : [null, null];
-  const { fields } = req.query;
+  const { fields, page, per_page: perPage } = req.query;
 
-  let dict = {};
+  const dict = fields ? arrayToObject(fields.split(',')) : null;
 
-  if (fields) {
-    dict = arrayToObject(fields.split(','));
-    console.log(dict);
-  }
+  const rangeStart = +page * +perPage;
+
+  const usersCount = await User.count({});
+
   const users = await User.find()
-    .skip(+rangeStart)
-    .limit(+rangeEnd)
+    .skip(rangeStart)
+    .limit(+perPage)
     .select(dict);
   if (users) {
-    res.send(users);
+    let paginationMetaData = {};
+    if (page && perPage) {
+      const maxPage = usersCount % +perPage === 0 ? usersCount / +perPage : Math.floor((usersCount / +perPage));
+      const nextPage = page <= maxPage ? page : +page + 1;
+      const prevPage = page > maxPage ? maxPage : page - 1;
+
+      paginationMetaData = {
+        page,
+        per_page: perPage,
+        total_count: usersCount,
+        page_count: maxPage,
+        links: {
+          last_page: `/api/v1/users?page=${maxPage}&per_page=${perPage}`,
+          next_page: page < maxPage ? `/api/v1/users?page=${nextPage}&per_page=${perPage}` : null,
+          prev_page: page > 0 ? `/api/v1/users?page=${prevPage}&per_page=${perPage}` : null,
+        },
+      };
+    }
+    res.send({ users, _metadata: paginationMetaData });
   } else {
     res.status(404).send('User not found');
   }
-  // return res.status(200).json(users);
 });
 
 router.get('/:id', async (req, res) => {
