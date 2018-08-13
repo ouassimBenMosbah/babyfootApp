@@ -45,7 +45,8 @@ router.get('/', async (req, res) => {
         },
       };
     }
-    res.send({ users, _metadata: paginationMetaData });
+    res.status(users.length < perPage ? 206 : 200);
+    res.send({ _metadata: paginationMetaData, users });
   } else {
     res.status(404).send('User not found');
   }
